@@ -1,0 +1,17 @@
+{
+	"name": "Create Views Gold",
+	"properties": {
+		"content": {
+			"query": "---------------------\n--Create View Subcate\n---------------------\nCREATE VIEW gold.Subcategories\nAS\n    SELECT\n*\nFROM\n    OPENROWSET(\n                BULK 'https://anshadfstorage.blob.core.windows.net/bronze/AdventureWorks_Product_Subcategories/',\n                FORMAT = 'CSV',\n                PARSER_VERSION = '2.0',\n                HEADER_ROW = TRUE\n    )as query1\n\n----------------------\n--create view customer\n----------------------\n\nCREATE VIEW gold.customer\nAS\n    SELECT\n*\nFROM\n    OPENROWSET(\n                BULK 'https://anshadfstorage.blob.core.windows.net/bronze/AdventureWorks_Customers/',\n                FORMAT = 'CSV',\n                PARSER_VERSION = '2.0',\n                HEADER_ROW = TRUE\n    )as query1\n---------------------------------\n--create products view\n---------------------------------\n    CREATE VIEW gold.products\nAS\n    SELECT\n*\nFROM\n    OPENROWSET(\n                BULK 'https://anshadfstorage.blob.core.windows.net/bronze/AdventureWorks_Products/',\n                FORMAT = 'CSV',\n                PARSER_VERSION = '2.0',\n                HEADER_ROW = TRUE\n    )as query1\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "endtoend_db",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
