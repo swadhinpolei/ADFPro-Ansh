@@ -1,0 +1,17 @@
+{
+	"name": "Read CSV file",
+	"properties": {
+		"content": {
+			"query": "SELECT\n*\nFROM\n    OPENROWSET(\n                BULK 'https://anshadfstorage.blob.core.windows.net/bronze/AdventureWorks_Product_Subcategories/',\n                FORMAT = 'CSV',\n                PARSER_VERSION = '2.0',\n                HEADER_ROW = TRUE\n    )as query1",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "endtoend_db",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "Create External Table",
+	"properties": {
+		"content": {
+			"query": "--Create master key encryption by password , this is credential\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Swadhin@15'\n\n--scoped credential\nCREATE DATABASE SCOPED CREDENTIAL cred_ansh\nWITH \n    IDENTITY = 'Managed Identity'\n\n--create external data source for silver and Gold layer\nCREATE EXTERNAL DATA SOURCE source_silver\nWITH(\n        LOCATION = 'https://anshadfstorage.blob.core.windows.net/bronze/',\n        CREDENTIAL = cred_ansh\n)\n\nCREATE EXTERNAL DATA SOURCE source_gold\nWITH(\n        LOCATION = 'https://anshadfstorage.blob.core.windows.net/gold/',\n        CREDENTIAL = cred_ansh\n)\n\n--External file format\nCREATE EXTERNAL FILE FORMAT format_parquet\nWITH\n(\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\n\n\n-- CREATE External Table using CETAS\nCREATE EXTERNAL TABLE gold.extsales\nWITH\n(\n    LOCATION = 'Extsales',\n    DATA_SOURCE = source_gold,\n    FILE_FORMAT = format_parquet\n) AS\nSELECT * FROM gold.products\n\nSELECT * FROM gold.products;\n\n\n\n\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "endtoend_db",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
